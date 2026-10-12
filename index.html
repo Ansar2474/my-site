@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Muhammad Ansar Shahzad — Digital Marketing</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    :root {
+      --ink:      #111827;
+      --ink2:     #1f2937;
+      --slate:    #4b5563;
+      --mist:     #9ca3af;
+      --amber:    #b45309;
+      --amber-lt: #d97706;
+      --amber-gl: rgba(180,83,9,.10);
+      --sand:     #faf8f4;
+      --sand2:    #f3efe7;
+      --white:    #ffffff;
+      --border:   rgba(17,24,39,.08);
+      --shadow-s: 0 2px 12px rgba(17,24,39,.07);
+      --shadow-m: 0 8px 32px rgba(17,24,39,.10);
+      --shadow-l: 0 20px 64px rgba(17,24,39,.13);
+      --r:        12px;
+      --head:     'Cormorant Garamond', Georgia, serif;
+      --body:     'Manrope', sans-serif;
+      --nav-h:    66px;
+    }
+
+    body { font-family: var(--body); background: var(--sand); color: var(--ink); -webkit-font-smoothing: antialiased; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--sand); }
+    ::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 2px; }
+
+    h1, h2, h3 { font-family: var(--head); font-weight: 700; color: var(--ink); line-height: 1.15; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--body); font-weight: 700; font-size: .82rem;
+      letter-spacing: .08em; text-transform: uppercase;
+      border: none; cursor: pointer; border-radius: 8px;
+      transition: transform .22s, box-shadow .22s, background .22s, color .22s;
+      text-decoration: none;
+    }
+    .btn:active { transform: scale(.97); }
+
+    .btn-amber {
+      background: var(--amber); color: #fff;
+      padding: .82rem 1.9rem;
+      box-shadow: 0 4px 20px rgba(180,83,9,.28);
+    }
+    .btn-amber:hover { background: var(--amber-lt); box-shadow: 0 8px 30px rgba(180,83,9,.38); transform: translateY(-2px); }
+
+    .btn-border {
+      background: transparent; color: var(--ink);
+      border: 2px solid rgba(17,24,39,.18); padding: .78rem 1.8rem;
+    }
+    .btn-border:hover { border-color: var(--amber); color: var(--amber); transform: translateY(-2px); }
+
+    .card {
+      background: var(--white); border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-s);
+      transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s;
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-l); }
+
+    .eyebrow {
+      display: inline-block; font-family: var(--body); font-size: .72rem;
+      font-weight: 800; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: .85rem;
+    }
+
+    .sec { padding: 90px 24px; }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    .sec-head { text-align: center; margin-bottom: 56px; }
+    .sec-head h2 { font-size: clamp(2rem,4vw,2.9rem); }
+    .sec-head p { font-family: var(--body); font-weight: 400; color: var(--slate); max-width: 500px; margin: .9rem auto 0; line-height: 1.85; font-size: .97rem; }
+    .rule { width: 44px; height: 3px; border-radius: 2px; background: var(--amber); margin: .8rem auto 0; }
+
+    .field { display: flex; flex-direction: column; gap: .45rem; }
+    .field label { font-family: var(--body); font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--mist); }
+    .field input, .field textarea, .field select {
+      font-family: var(--body); font-size: .93rem; color: var(--ink);
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: 10px; padding: .82rem 1rem; outline: none;
+      transition: border-color .2s, box-shadow .2s; width: 100%;
+    }
+    .field input:focus, .field textarea:focus, .field select:focus {
+      border-color: var(--amber); box-shadow: 0 0 0 3px rgba(180,83,9,.10);
+    }
+
+    .photo-slot {
+      border-radius: 18px; overflow: hidden;
+      background: linear-gradient(145deg, #f0ebe0, #e8e0d0);
+      border: 2.5px dashed rgba(180,83,9,.30);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .85rem; padding: 2rem; text-align: center;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes dotPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(34,197,94,.45); }
+      60% { box-shadow: 0 0 0 8px rgba(34,197,94,0); }
+    }
+
+    .wa-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #25d366; box-shadow: 0 6px 24px rgba(37,211,102,.4);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: transform .2s, box-shadow .2s;
+      text-decoration: none; border: none;
+      animation: float 3.5s ease-in-out infinite;
+    }
+    .wa-float:hover { transform: scale(1.1) translateY(-2px); box-shadow: 0 12px 36px rgba(37,211,102,.5); animation: none; }
+
+    @media (max-width: 600px) {
+      .process-grid { grid-template-columns: 1fr 1fr !important; gap: 1rem !important; }
+    }
+    @media (max-width: 860px) {
+      .two-col { grid-template-columns: 1fr !important; }
+      .three-col { grid-template-columns: 1fr 1fr !important; }
+      .hide-mob { display: none !important; }
+      .sec { padding: 64px 20px; }
+      .sec-head { margin-bottom: 40px; }
+    }
+    @media (max-width: 540px) {
+      .three-col { grid-template-columns: 1fr !important; }
+      .form-row { grid-template-columns: 1fr !important; }
+    }
+    @media (min-width: 861px) {
+      .hide-desk { display: none !important; }
+    }
+
+    .nav-lnk {
+      font-family: var(--body); font-size: .78rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--ink);
+      background: none; border: none; cursor: pointer; padding: .28rem 0;
+      border-bottom: 2px solid transparent;
+      transition: color .2s, border-color .2s;
+    }
+    .nav-lnk:hover, .nav-lnk.on { color: var(--amber); border-bottom-color: var(--amber); }
+
+    .foot-lnk {
+      font-family: var(--body); font-size: .85rem; color: rgba(255,255,255,.5);
+      background: none; border: none; cursor: pointer; transition: color .2s; display: block; padding: .25rem 0; text-align: left;
+    }
+    .foot-lnk:hover { color: #d97706; }
+
+    .faq-item {
+      border: 1px solid var(--border); border-radius: 12px;
+      background: var(--white); overflow: hidden;
+      box-shadow: var(--shadow-s); margin-bottom: .85rem;
+    }
+    .faq-trigger {
+      width: 100%; display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 1.5rem; background: none; border: none; cursor: pointer; text-align: left;
+      font-family: var(--body); font-weight: 600; font-size: .92rem; color: var(--ink);
+      gap: 1rem;
+    }
+    .faq-trigger:hover { background: var(--sand); }
+    .faq-body { padding: 0 1.5rem 1.2rem; font-family: var(--body); font-size: .88rem; color: var(--slate); line-height: 1.85; display: none; }
+    .faq-item.open .faq-body { display: block; }
+    .faq-item.open .faq-trigger span:last-child { transform: rotate(45deg); }
+
+    .icon-box {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: var(--amber-gl); display: flex; align-items: center; justify-content: center;
+      font-size: 1.45rem; margin-bottom: 1.1rem; flex-shrink: 0;
+      border: 1px solid rgba(180,83,9,.12);
+    }
+
+    .testi-card { padding: 2rem; }
+    .quote-mark { font-family: Georgia, serif; font-size: 3.5rem; line-height: 1; color: var(--amber); opacity: .25; margin-bottom: -.2rem; }
+
+    .mob-overlay {
+      position: fixed; inset: 0; z-index: 300;
+      background: var(--ink); display: none; flex-direction: column;
+      align-items: center; justify-content: center; gap: 2.2rem;
+    }
+    .mob-overlay.active { display: flex; }
+
+    .legal-body h3 { font-family: var(--head); font-size: 1.3rem; margin: 2rem 0 .6rem; color: var(--ink); }
+    .legal-body p, .legal-body li { font-family: var(--body); font-size: .92rem; color: var(--slate); line-height: 1.9; margin-bottom: .6rem; }
+    .legal-body ul { padding-left: 1.4rem; }
+    .legal-body a { color: var(--amber); }
+
+    .page-section { display: none; }
+    .page-section.active { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="header" style="position:fixed; top:0; left:0; right:0; z-index:200; height:var(--nav-h); background:rgba(250,248,244,.80); backdrop-filter:blur(18px); border-bottom:1px solid transparent; transition:all .28s;">
+    <div style="max-width:1100px; margin:0 auto; padding:0 24px; height:100%; display:flex; align-items:center; justifyContent:space-between;">
+      
+      <!-- Logo -->
+      <div style="display:flex; align-items:center; gap:.55rem; cursor:pointer;" onclick="switchPage('Home')">
+        <div style="width:38px; height:38px; border-radius:10px; flex-shrink:0; background:linear-gradient(135deg,#111827,#1f2937); display:flex; align-items:center; justifyContent:center; boxShadow:0 4px 14px rgba(17,24,39,.22);">
+          <span style="font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.15rem; color:#d97706;">A</span>
+        </div>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.02rem; line-height:1.1; color:#111827;">
+            ansar<span style="color:#b45309">.me</span>
+          </div>
+          <div style="font-family:'Manrope',sans-serif; font-size:.6rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#9ca3af;">
+            Digital Marketing
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop Nav -->
+      <nav class="hide-mob" style="display:flex; gap:2.2rem; alignItems:center;">
+        <button class="nav-lnk on" onclick="switchPage('Home')">Home</button>
+        <button class="nav-lnk" onclick="switchPage('About')">About</button>
+        <button class="nav-lnk" onclick="switchPage('Services')">Services</button>
+        <button class="nav-lnk" onclick="switchPage('Contact')">Contact</button>
+        <button class="btn btn-amber" style="padding:.6rem 1.4rem; fontSize:.76rem;" onclick="switchPage('Contact')">Free Consultation</button>
+      </nav>
+
+      <!-- Hamburger -->
+      <button class="hide-desk" onclick="toggleMobileMenu(true)" style="background:none; border:none; cursor:pointer; display:flex; flexDirection:column; gap:5px; padding:6px;">
+        <span style="display:block; width:24px; height:2.5px; border-radius:2px; background:var(--ink)"></span>
+        <span style="display:block; width:24px; height:2.5px; border-radius:2px; background:var(--ink)"></span>
+        <span style="display:block; width:24px; height:2.5px; border-radius:2px; background:var(--ink)"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Overlay Menu -->
+  <div id="mobOverlay" class="mob-overlay">
+    <button onclick="toggleMobileMenu(false)" style="position:absolute; top:20px; right:24px; background:none; border:none; cursor:pointer; color:#fff; fontSize:1.8rem; line-height:1;">✕</button>
+    <div style="display:flex; align-items:center; gap:.55rem; cursor:pointer;" onclick="switchPage('Home'); toggleMobileMenu(false);">
+      <div style="width:38px; height:38px; border-radius:10px; flex-shrink:0; background:linear-gradient(135deg,#111827,#1f2937); display:flex; align-items:center; justifyContent:center;">
+        <span style="font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.15rem; color:#d97706;">A</span>
+      </div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.02rem; line-height:1.1; color:#fff;">ansar<span style="color:#b45309">.me</span></div>
+        <div style="font-family:'Manrope',sans-serif; font-size:.6rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.4);">Digital Marketing</div>
+      </div>
+    </div>
+    <button style="font-family:'Manrope',sans-serif; font-size:1.2rem; font-weight:700; color:rgba(255,255,255,.85); background:none; border:none; cursor:pointer;" onclick="switchPage('Home'); toggleMobileMenu(false);">Home</button>
+    <button style="font-family:'Manrope',sans-serif; font-size:1.2rem; font-weight:700; color:rgba(255,255,255,.85); background:none; border:none; cursor:pointer;" onclick="switchPage('About'); toggleMobileMenu(false);">About</button>
+    <button style="font-family:'Manrope',sans-serif; font-size:1.2rem; font-weight:700; color:rgba(255,255,255,.85); background:none; border:none; cursor:pointer;" onclick="switchPage('Services'); toggleMobileMenu(false);">Services</button>
+    <button style="font-family:'Manrope',sans-serif; font-size:1.2rem; font-weight:700; color:rgba(255,255,255,.85); background:none; border:none; cursor:pointer;" onclick="switchPage('Contact'); toggleMobileMenu(false);">Contact</button>
+    <button class="btn btn-amber" onclick="switchPage('Contact'); toggleMobileMenu(false);">Free Consultation</button>
+  </div>
+
+  <main style="flex:1;">
+
+    <!-- HOME PAGE -->
+    <div id="page-Home" class="page-section active" style="paddingTop:var(--nav-h);">
+      <section style="min-height:calc(100vh - var(--nav-h)); display:flex; align-items:center; padding:60px 24px 80px; background:linear-gradient(155deg, #faf8f4 50%, #f3efe7 100%); position:relative; overflow:hidden;">
+        <div class="wrap" style="position:relative; width:100%;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:3.5rem; align-items:center;" class="two-col">
+            <div>
+              <div style="display:inline-flex; align-items:center; gap:.5rem; marginBottom:1.3rem;">
+                <span style="display:inline-block; width:9px; height:9px; border-radius:50%; background:#22c55e; animation:dotPulse 2s infinite;"></span>
+                <span style="font-family:'Manrope',sans-serif; font-size:.75rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#15803d;">Open to new clients</span>
+              </div>
+              <h1 style="font-size:clamp(2.4rem,5.5vw,3.8rem); marginBottom:1.1rem;">
+                Helping Local Businesses<br />
+                <span style="color:var(--amber); font-style:italic;">Get Found Online</span>
+              </h1>
+              <p style="font-family:'Manrope',sans-serif; font-weight:400; font-size:clamp(.97rem,2vw,1.1rem); color:var(--slate); line-height:1.85; max-width:470px; marginBottom:2rem;">
+                I'm <strong style="color:var(--ink); font-weight:700;">Muhammad Ansar</strong> — a digital marketer from Pakistan who helps small businesses and local brands grow their customer base through Meta Ads, social media, and building an online presence that actually works.
+              </p>
+              <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                <button class="btn btn-amber" onclick="switchPage('Services')">Explore My Services</button>
+                <button class="btn btn-border" onclick="switchPage('Contact')">Let's Talk →</button>
+              </div>
+              <div style="display:flex; gap:1.75rem; marginTop:2.5rem; paddingTop:2rem; border-top:1px solid rgba(17,24,39,.08); flex-wrap:wrap;">
+                <div>
+                  <div style="font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.9rem; color:var(--ink); line-height:1;">15+</div>
+                  <div style="font-family:'Manrope',sans-serif; font-size:.72rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--mist); marginTop:.2rem;">Clients Served</div>
+                </div>
+                <div>
+                  <div style="font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.9rem; color:var(--ink); line-height:1;">2+</div>
+                  <div style="font-family:'Manrope',sans-serif; font-size:.72rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--mist); marginTop:.2rem;">Years Learning</div>
+                </div>
+                <div>
+                  <div style="font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.9rem; color:var(--ink); line-height:1;">24hr</div>
+                  <div style="font-family:'Manrope',sans-serif; font-size:.72rem; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--mist); marginTop:.2rem;">Response Time</div>
+                </div>
+              </div>
+            </div>
+            <div style="position:relative;">
+              <div class="photo-slot" style="height:480px; position:relative; z-index:1; box-shadow:var(--shadow-l);">
+                <div style="font-size:3rem; opacity:.55;">📷</div>
+                <p style="font-family:'Manrope',sans-serif; font-weight:700; font-size:.82rem; color:var(--amber); letter-spacing:.08em; text-transform:uppercase;">Your Photo Here</p>
+                <p style="font-family:'Manrope',sans-serif; font-size:.79rem; color:#9ca3af; max-width:220px; line-height:1.7;">Place a professional headshot here — well-lit, plain background, looking directly at the camera.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Preview -->
+      <section class="sec" style="background:var(--white);">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="eyebrow">What I Do</span>
+            <h2>Services That Move Your Business <em style="font-style:italic; color:var(--amber);">Forward</em></h2>
+            <div class="rule"></div>
+            <p>Practical digital marketing for businesses that want to grow — without the jargon or wasted budget.</p>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem;" class="two-col">
+            <div class="card" style="padding:1.85rem;">
+              <div class="icon-box">🎯</div>
+              <span style="font-family:'Manrope',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--amber); display:block; marginBottom:.5rem;">High Impact</span>
+              <h3 style="font-size:1.12rem; marginBottom:.65rem;">Meta Ads & Paid Advertising</h3>
+              <p style="font-family:'Manrope',sans-serif; font-size:.88rem; color:var(--slate); line-height:1.8;">I plan and run Facebook and Instagram ad campaigns that reach the right people at the right time. Whether your goal is more sales, more enquiries, or more foot traffic — every ad is built with a clear purpose and a defined audience.</p>
+            </div>
+            <div class="card" style="padding:1.85rem;">
+              <div class="icon-box">📱</div>
+              <span style="font-family:'Manrope',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--amber); display:block; marginBottom:.5rem;">Ongoing</span>
+              <h3 style="font-size:1.12rem; marginBottom:.65rem;">Social Media Management</h3>
+              <p style="font-family:'Manrope',sans-serif; font-size:.88rem; color:var(--slate); line-height:1.8;">Consistent posting, audience engagement, and a content plan that reflects your brand. I manage your social media accounts so you can focus on running your business while your pages stay active and professional.</p>
+            </div>
+            <div class="card" style="padding:1.85rem;">
+              <div class="icon-box">✍️</div>
+              <span style="font-family:'Manrope',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--amber); display:block; marginBottom:.5rem;">Brand Building</span>
+              <h3 style="font-size:1.12rem; marginBottom:.65rem;">Content Creation & Strategy</h3>
+              <p style="font-family:'Manrope',sans-serif; font-size:.88rem; color:var(--slate); line-height:1.8;">From captions to graphic ideas to monthly content calendars — I help you figure out what to say, how to say it, and when to post it. Good content builds trust before a single rupee is spent on ads.</p>
+            </div>
+            <div class="card" style="padding:1.85rem;">
+              <div class="icon-box">🌐</div>
+              <span style="font-family:'Manrope',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--amber); display:block; marginBottom:.5rem;">Starter Package</span>
+              <h3 style="font-size:1.12rem; marginBottom:.65rem;">Taking Your Business Online</h3>
+              <p style="font-family:'Manrope',sans-serif; font-size:.88rem; color:var(--slate); line-height:1.8;">If your business only exists offline, you're missing out on thousands of potential customers who are searching for exactly what you offer. I set up your pages, write your bio, present your products properly, and give your business a professional digital presence from scratch.</p>
+            </div>
+          </div>
+          <div style="text-align:center; marginTop:2.5rem;">
+            <button class="btn btn-border" onclick="switchPage('Services')">See Full Service Details →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="sec" style="background:var(--sand2);">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="eyebrow">Client Feedback</span>
+            <h2>What the People I've Worked With <em style="font-style:italic; color:var(--amber);">Actually Say</em></h2>
+            <div class="rule"></div>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem;" class="three-col">
+            <div class="card testi-card">
+              <div class="quote-mark">"</div>
+              <p style="font-family:'Manrope',sans-serif; font-size:.9rem; color:#374151; line-height:1.85; font-style:italic; marginBottom:1.5rem;">"Our online orders went up noticeably within a few weeks. The ad targeting was spot-on — we started getting customers from areas we had never reached before."</p>
+              <div style="display:flex; align-items:center; gap:.75rem;">
+                <div style="width:42px; height:42px; border-radius:50%; flex-shrink:0; background:#b45309; display:flex; align-items:center; justifyContent:center; font-family:'Manrope',sans-serif; font-weight:800; font-size:.82rem; color:#fff;">TH</div>
+                <div>
+                  <div style="font-family:'Manrope',sans-serif; font-weight:700; font-size:.88rem; color:var(--ink);">Tanveer Hasan</div>
+                  <div style="font-family:'Manrope',sans-serif; font-size:.74rem; color:var(--mist);">CEO, Bake-Well Bakery</div>
+                </div>
+              </div>
+            </div>
+            <div class="card testi-card">
+              <div class="quote-mark">"</div>
+              <p style="font-family:'Manrope',sans-serif; font-size:.9rem; color:#374151; line-height:1.85; font-style:italic; marginBottom:1.5rem;">"He asks the right questions before doing anything. The campaigns were measured, results were trackable, and communication was always clear and prompt."</p>
+              <div style="display:flex; align-items:center; gap:.75rem;">
+                <div style="width:42px; height:42px; border-radius:50%; flex-shrink:0; background:#1d4ed8; display:flex; align-items:center; justifyContent:center; font-family:'Manrope',sans-serif; font-weight:800; font-size:.82rem; color:#fff;">AH</div>
+                <div>
+                  <div style="font-family:'Manrope',sans-serif; font-weight:700; font-size:.88rem; color:var(--ink);">Abdul Hanan</div>
+                  <div style="font-family:'Manrope',sans-serif; font-size:.74rem; color:var(--mist);">Marketing Manager, Amazone</div>
+                </div>
+              </div>
+            </div>
+            <div class="card testi-card">
+              <div class="quote-mark">"</div>
+              <p style="font-family:'Manrope',sans-serif; font-size:.9rem; color:#374151; line-height:1.85; font-style:italic; marginBottom:1.5rem;">"Very honest about what to expect — which I appreciated. He didn't overpromise. Our page engagement improved steadily and the content looked professional."</p>
+              <div style="display:flex; align-items:center; gap:.75rem;">
+                <div style="width:42px; height:42px; border-radius:50%; flex-shrink:0; background:#be185d; display:flex; align-items:center; justifyContent:center; font-family:'Manrope',sans-serif; font-weight:800; font-size:.82rem; color:#fff;">SF</div>
+                <div>
+                  <div style="font-family:'Manrope',sans-serif; font-weight:700; font-size:.88rem; color:var(--ink);">Sana Farooq</div>
+                  <div style="font-family:'Manrope',sans-serif; font-size:.74rem; color:var(--mist);">Manager, TRC</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Band -->
+      <section style="padding:72px 24px; text-align:center; background:linear-gradient(135deg,#111827 0%,#1f2937 100%); position:relative; overflow:hidden;">
+        <div style="position:relative; max-width:580px; margin:0 auto;">
+          <span class="eyebrow" style="color:#d97706;">Let's Build Something</span>
+          <h2 style="color:#fff; font-size:clamp(1.9rem,4vw,2.7rem); margin:.6rem 0 1rem;">Ready to Grow Your Business Online?</h2>
+          <p style="font-family:'Manrope',sans-serif; color:rgba(255,255,255,.55); line-height:1.85; marginBottom:2rem;">Book a free call. No sales pitch — just an honest conversation about what's possible for your business.</p>
+          <button class="btn btn-amber" style="font-size:.92rem; padding:1rem 2.4rem;" onclick="switchPage('Contact')">Book a Free Call →</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="page-About" class="page-section" style="paddingTop:var(--nav-h);">
+      <div style="background:linear-gradient(150deg,#111827,#1f2937); padding:64px 24px 56px; text-align:center; position:relative; overflow:hidden;">
+        <div style="position:relative;">
+          <span class="eyebrow" style="color:#d97706;">About Me</span>
+          <h1 style="color:#fff; font-size:clamp(2rem,5vw,3rem); marginTop:.5rem;">The Person Behind the Work</h1>
+          <p style="font-family:'Manrope',sans-serif; color:rgba(255,255,255,.5); max-width:440px; margin:.9rem auto 0; line-height:1.85; font-size:.95rem;">A straightforward introduction — who I am, why I do this, and how I approach my work.</p>
+        </div>
+      </div>
+      <section class="sec" style="background:var(--white);">
+        <div class="wrap">
+          <div style="display:grid; grid-template-columns:.85fr 1.15fr; gap:3.5rem; align-items:start;" class="two-col">
+            <div>
+              <div class="photo-slot" style="height:460px; box-shadow:var(--shadow-l);">
+                <div style="font-size:2.8rem; opacity:.5;">📷</div>
+                <p style="font-family:'Manrope',sans-serif; font-weight:700; font-size:.82rem; color:var(--amber); letter-spacing:.08em; text-transform:uppercase;">Your Photo Here</p>
+                <p style="font-family:'Manrope',sans-serif; font-size:.79rem; color:#9ca3af; max-width:220px; line-height:1.7;">Place a professional headshot here — well-lit, plain background, looking directly at the camera.</p>
+              </div>
+              <div style="marginTop:1.25rem; padding:1.4rem; background:var(--sand); border-radius:14px; border:1px solid var(--border);">
+                <div style="font-family:'Manrope',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--mist); marginBottom:.85rem;">Reach Me Directly</div>
+                <div style="display:flex; align-items:center; gap:.7rem; marginBottom:.65rem;">
+                  <span>📞</span><a href="tel:+923117420474" style="font-family:'Manrope',sans-serif; font-size:.88rem; color:var(--amber); font-weight:600; text-decoration:none;">+92 311 7420474</a>
+                </div>
+                <div style="display:flex; align-items:center; gap:.7rem; marginBottom:.65rem;">
+                  <span>✉️</span><a href="mailto:hello@ansar.me" style="font-family:'Manrope',sans-serif; font-size:.88rem; color:var(--amber); font-weight:600; text-decoration:none;">hello@ansar.me</a>
+                </div>
+                <div style="display:flex; align-items:center; gap:.7rem;">
+                  <span>📍</span><span style="font-family:'Manrope',sans-serif; font-size:.88rem; color:var(--ink);">Pakistan · Worldwide</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <span class="eyebrow">My Story</span>
+              <h2 style="font-size:clamp(1.7rem,3.5vw,2.5rem); marginBottom:1.4rem;">Muhammad Ansar Shahzad</h2>
+              <p style="font-family:'Manrope',sans-serif; font-weight:400; font-size:.96rem; color:var(--slate); line-height:1.9; marginBottom:1rem;">I'm a digital marketer from Pakistan, and I work with small businesses and local brands to help them get customers through social media and online advertising. I'm currently studying at Allama Iqbal Open University — but everything I know about marketing, I've learned by actually doing it.</p>
+              <p style="font-family:'Manrope',sans-serif; font-weight:400; font-size:.96rem; color:var(--slate); line-height:1.9; marginBottom:1rem;">I started because I kept seeing the same pattern: a great business, doing good work, with barely any online presence. Their competitors — sometimes with worse products — were getting more customers simply because they showed up online. That gap felt like something I could fix.</p>
+              <p style="font-family:'Manrope',sans-serif; font-weight:400; font-size:.96rem; color:var(--slate); line-height:1.9; marginBottom:1.75rem;">I don't pretend to have years of corporate experience. What I do have is genuine interest in this work, a habit of tracking what actually works, and the honesty to tell a client when something isn't going to deliver results. I'm still growing — and I think that's exactly why I'm a good fit for businesses that are also on their way up.</p>
+              <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                <button class="btn btn-amber" onclick="switchPage('Services')">See My Services</button>
+                <button class="btn btn-border" onclick="switchPage('Contact')">Let's Have a Call</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="sec" style="background:var(--sand2);">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="eyebrow">Working Together</span>
+            <h2>What You Can Expect From Me</h2>
+            <div class="rule"></div>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem;" class="three-col">
+            <div class="card" style="padding:2rem; text-align:center;">
+              <div style="font-size:2rem; marginBottom:.85rem;">🗣️</div>
+              <h3 style="font-size:1.05rem; marginBottom:.55rem;">Straight Talking</h3>
+              <p style="font-family:'Manrope',sans-serif; font-size:.87rem; color:var(--slate); line-height:1.8;">I'll tell you what's realistic for your situation. If something isn't worth spending money on, I'll say so — even if it means less work for me.</p>
+            </div>
+            <div class="card" style="padding:2rem; text-align:center;">
+              <div style="font-size:2rem; marginBottom:.85rem;">📐</div>
+              <h3 style="font-size:1.05rem; marginBottom:.55rem;">Deliberate Decisions</h3>
+              <p style="font-family:'Manrope',sans-serif; font-size:.87rem; color:var(--slate); line-height:1.8;">I don't run campaigns on guesswork. Everything is tracked, measured, and adjusted based on what the numbers actually say.</p>
+            </div>
+            <div class="card" style="padding:2rem; text-align:center;">
+              <div style="font-size:2rem; marginBottom:.85rem;">📬</div>
+              <h3 style="font-size:1.05rem; marginBottom:.55rem;">You'll Always Know What's Happening</h3>
+              <p style="font-family:'Manrope',sans-serif; font-size:.87rem; color:var(--slate); line-height:1.8;">I send clear updates and I respond quickly. You won't be left wondering what's going on with your account.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- SERVICES PAGE -->
+    <div id="page-Services" class="page-section" style="paddingTop:var(--nav-h);">
+      <div style="background:linear-gradient(150deg,#111827,#1f2937); padding:64px 24px 56px; text-align:center; position:relative; overflow:hidden;">
+        <div style="position:relative;">
+          <span class="eyebrow" style="color:#d97706;">Services</span>
+          <h1 style="color:#fff; font-size:clamp(2rem,5vw,3rem); marginTop:.5rem;">What I Can Do for Your Business</h1>
+          <p style="font-family:'Manrope',sans-serif; color:rgba(255,255,255,.5); max-width:480px; margin:.9rem auto 0; line-height:1.85; font-size:.95rem;">No packages pulled from a template. These are the specific things I actually do well — and the reasons businesses hire me.</p>
+        </div>
+      </div>
+      <section class="sec" style="background:var(--white);">
+        <div class="wrap">
+          <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:1.75rem;" class="two-col">
+            <div class="card" style="padding:2.1rem;">
+              <div class="icon-box">🎯</div>
+              <span style="font-family:'Manrope',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--amber); display:block; marginBottom:.5rem;">High Impact</span>
+              <h3 style="font-size:1.15rem; marginBottom:.7rem;">Meta Ads & Paid Advertising</h3>
+              <p style="font-family:'Manrope',sans-serif; font-size:.9rem; color:var(--slate); line-height:1.82;">I plan and run Facebook and Instagram ad campaigns that reach the right people at the right time. Whether your goal is more sales, more enquiries, or more foot traffic — every ad is built with a clear purpose and a defined audience.</p>
+            </div>
+            <div class="card" style="padding:2.1rem;">
+              <div class="icon-box">📱</div>
+              <span style="font-family:'Manrope',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--amber); display:block; marginBottom:.5rem;">Ongoing</span>
+              <h3 style="font-size:1.15rem; marginBottom:.7rem;">Social Media Management</h3>
+              <p style="font-family:'Manrope',sans-serif; font-size:.9rem; color:var(--slate); line-height:1.82;">Consistent posting, audience engagement, and a content plan that reflects your brand. I manage your social media accounts so you can focus on running your business while your pages stay active and professional.</p>
+            </div>
+            <div class="card" style="padding:2.1rem;">
+              <div class="icon-box">✍️</div>
+              <span style="font-family:'Manrope',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--amber); display:block; marginBottom:.5rem;">Brand Building</span>
+              <h3 style="font-size:1.15rem; marginBottom:.7rem;">Content Creation & Strategy</h3>
+              <p style="font-family:'Manrope',sans-serif; font-size:.9rem; color:var(--slate); line-height:1.82;">From captions to graphic ideas to monthly content calendars — I help you figure out what to say, how to say it, and when to post it. Good content builds trust before a single rupee is spent on ads.</p>
+            </div>
+            <div class="card" style="padding:2.1rem;">
+              <div class="icon-box">🌐</div>
+              <span style="font-family:'Manrope',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--amber); display:block; marginBottom:.5rem;">Starter Package</span>
+              <h3 style="font-size:1.15rem; marginBottom:.7rem;">Taking Your Business Online</h3>
+              <p style="font-family:'Manrope',sans-serif; font-size:.9rem; color:var(--slate); line-height:1.82;">If your business only exists offline, you're missing out on thousands of potential customers who are searching for exactly what you offer. I set up your pages, write your bio, present your products properly, and give your business a professional digital presence from scratch.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Process -->
+      <section class="sec" style="background:var(--sand2);">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="eyebrow">How It Works</span>
+            <h2>Four Steps, One Clear Direction</h2>
+            <div class="rule"></div>
+            <p>From first conversation to ongoing results — here's what working together actually looks like.</p>
+          </div>
+          <div class="process-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem;">
+            <div class="card" style="padding:1.75rem;">
+              <div style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,var(--amber),var(--amber-lt)); display:flex; align-items:center; justifyContent:center; font-family:'Manrope',sans-serif; font-weight:800; font-size:.78rem; color:#fff; marginBottom:1rem;">01</div>
+              <div style="font-size:1.5rem; marginBottom:.7rem;">☎️</div>
+              <h3 style="font-size:1rem; marginBottom:.55rem;">Free Discovery Call</h3>
+              <p style="font-family:'Manrope',sans-serif; font-size:.85rem; color:var(--slate); line-height:1.8;">We talk through your business, your goals, and what you've tried before. No pitch, no pressure — just a real conversation.</p>
+            </div>
+            <div class="card" style="padding:1.75rem;">
+              <div style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,var(--amber),var(--amber-lt)); display:flex; align-items:center; justifyContent:center; font-family:'Manrope',sans-serif; font-weight:800; font-size:.78rem; color:#fff; marginBottom:1rem;">02</div>
+              <div style="font-size:1.5rem; marginBottom:.7rem;">🗺️</div>
+              <h3 style="font-size:1rem; marginBottom:.55rem;">Strategy & Plan</h3>
+              <p style="font-family:'Manrope',sans-serif; font-size:.85rem; color:var(--slate); line-height:1.8;">I put together a focused plan based on your budget and business type. You'll know exactly what will be done and why.</p>
+            </div>
+            <div class="card" style="padding:1.75rem;">
+              <div style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,var(--amber),var(--amber-lt)); display:flex; align-items:center; justifyContent:center; font-family:'Manrope',sans-serif; font-weight:800; font-size:.78rem; color:#fff; marginBottom:1rem;">03</div>
+              <div style="font-size:1.5rem; marginBottom:.7rem;">⚙️</div>
+              <h3 style="font-size:1rem; marginBottom:.55rem;">Setup & Execution</h3>
+              <p style="font-family:'Manrope',sans-serif; font-size:.85rem; color:var(--slate); line-height:1.8;">I handle the technical work — setting up campaigns, creating content, launching ads — so you don't have to manage any of it.</p>
+            </div>
+            <div class="card" style="padding:1.75rem;">
+              <div style="width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,var(--amber),var(--amber-lt)); display:flex; align-items:center; justifyContent:center; font-family:'Manrope',sans-serif; font-weight:800; font-size:.78rem; color:#fff; marginBottom:1rem;">04</div>
+              <div style="font-size:1.5rem; marginBottom:.7rem;">📈</div>
+              <h3 style="font-size:1rem; marginBottom:.55rem;">Review & Improve</h3>
+              <p style="font-family:'Manrope',sans-serif; font-size:.85rem; color:var(--slate); line-height:1.8;">You get regular updates. We look at what the numbers say, keep what's working, and adjust what isn't.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="sec" style="background:var(--white);">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="eyebrow">FAQ</span>
+            <h2>Questions Worth Answering Honestly</h2>
+            <div class="rule"></div>
+          </div>
+          <div style="max-width:740px; margin:0 auto;">
+            <div class="faq-item">
+              <button class="faq-trigger" onclick="toggleFaq(this)">
+                <span>What are the benefits of taking your business online?</span>
+                <span style="color:var(--amber); font-size:1.3rem; flex-shrink:0; transition:transform .2s;">+</span>
+              </button>
+              <div class="faq-body">When your business has a proper online presence, you stop relying entirely on word-of-mouth and foot traffic. People search for products and services online every single day — and if you're not there, they find your competitor instead. Going online means you can reach customers in your city (or beyond), present your products professionally, collect reviews, run affordable ads to a targeted audience, and stay relevant in a market that's increasingly digital.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-trigger" onclick="toggleFaq(this)">
+                <span>What are you losing by staying offline in today's world?</span>
+                <span style="color:var(--amber); font-size:1.3rem; flex-shrink:0; transition:transform .2s;">+</span>
+              </button>
+              <div class="faq-body">Every day your business isn't online, you're missing potential customers who are actively looking for what you offer. They search, they find someone else, and they never even know you exist. Beyond lost sales, staying offline means no way to build a loyal following, no way to showcase your work or products, and no way to compete with businesses that are already running ads and collecting reviews.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-trigger" onclick="toggleFaq(this)">
+                <span>How much budget do I need to start with Meta Ads?</span>
+                <span style="color:var(--amber); font-size:1.3rem; flex-shrink:0; transition:transform .2s;">+</span>
+              </button>
+              <div class="faq-body">You don't need a large budget to get started. A modest daily spend can generate meaningful results if the targeting and creative are done correctly. I'll always be upfront about what's realistic for your specific budget before any money is spent.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-trigger" onclick="toggleFaq(this)">
+                <span>I already have a Facebook page. Can you improve it?</span>
+                <span style="color:var(--amber); font-size:1.3rem; flex-shrink:0; transition:transform .2s;">+</span>
+              </button>
+              <div class="faq-body">Absolutely. Having a page is just the beginning. Most pages I've seen are inconsistently posted, poorly optimised, and don't convert visitors into enquiries. I can audit what you have, clean it up, and put a proper strategy in place.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-trigger" onclick="toggleFaq(this)">
+                <span>Do I need to be tech-savvy to work with you?</span>
+                <span style="color:var(--amber); font-size:1.3rem; flex-shrink:0; transition:transform .2s;">+</span>
+              </button>
+              <div class="faq-body">Not at all. My job is to handle the technical side so you don't have to. I'll explain things clearly when needed, but you won't need to learn anything complicated to see results.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="page-Contact" class="page-section" style="paddingTop:var(--nav-h);">
+      <div style="background:linear-gradient(150deg,#111827,#1f2937); padding:64px 24px 56px; text-align:center; position:relative; overflow:hidden;">
+        <div style="position:relative;">
+          <span class="eyebrow" style="color:#d97706;">Contact</span>
+          <h1 style="color:#fff; font-size:clamp(2rem,5vw,3rem); marginTop:.5rem;">Let's Have a Real Conversation</h1>
+          <p style="font-family:'Manrope',sans-serif; color:rgba(255,255,255,.5); max-width:430px; margin:.9rem auto 0; line-height:1.85; font-size:.95rem;">Whether you have a question or want to get started — I'm easy to reach and quick to respond.</p>
+        </div>
+      </div>
+      <section class="sec" style="background:var(--white);">
+        <div class="wrap">
+          <div style="display:grid; grid-template-columns:.85fr 1.15fr; gap:3rem; align-items:start;" class="two-col">
+            <div>
+              <h2 style="font-size:1.5rem; marginBottom:1.5rem;">My Contact Details</h2>
+              <div style="display:flex; flexDirection:column; gap:.85rem; marginBottom:2rem;">
+                <div style="display:flex; gap:.9rem; alignItems:center; padding:1rem 1.2rem; borderRadius:12px; background:var(--sand); border:1px solid var(--border);">
+                  <span style="font-size:1.2rem">📞</span>
+                  <div>
+                    <div style="font-family:'Manrope',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--mist)">Phone</div>
+                    <a href="tel:+923117420474" style="font-family:'Manrope',sans-serif; font-weight:600; font-size:.88rem; color:var(--amber); text-decoration:none">+92 311 7420474</a>
+                  </div>
+                </div>
+                <div style="display:flex; gap:.9rem; alignItems:center; padding:1rem 1.2rem; borderRadius:12px; background:var(--sand); border:1px solid var(--border);">
+                  <span style="font-size:1.2rem">✉️</span>
+                  <div>
+                    <div style="font-family:'Manrope',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--mist)">Email</div>
+                    <a href="mailto:hello@ansar.me" style="font-family:'Manrope',sans-serif; font-weight:600; font-size:.88rem; color:var(--amber); text-decoration:none">hello@ansar.me</a>
+                  </div>
+                </div>
+                <div style="display:flex; gap:.9rem; alignItems:center; padding:1rem 1.2rem; borderRadius:12px; background:var(--sand); border:1px solid var(--border);">
+                  <span style="font-size:1.2rem">💬</span>
+                  <div>
+                    <div style="font-family:'Manrope',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--mist)">WhatsApp</div>
+                    <a href="https://wa.me/923117420474" target="_blank" rel="noopener noreferrer" style="font-family:'Manrope',sans-serif; font-weight:600; font-size:.88rem; color:var(--amber); text-decoration:none">Chat with me directly</a>
+                  </div>
+                </div>
+                <div style="display:flex; gap:.9rem; alignItems:center; padding:1rem 1.2rem; borderRadius:12px; background:var(--sand); border:1px solid var(--border);">
+                  <span style="font-size:1.2rem">📍</span>
+                  <div>
+                    <div style="font-family:'Manrope',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--mist)">Location</div>
+                    <div style="font-family:'Manrope',sans-serif; font-weight:600; font-size:.88rem; color:var(--ink)">Pakistan · Available Worldwide</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="background:var(--sand); border:1px solid var(--border); borderRadius:20px; padding:2.2rem; box-shadow:var(--shadow-m);">
+              <form id="contactForm" onsubmit="handleFormSubmit(event)" style="display:flex; flexDirection:column; gap:1.1rem;">
+                <h3 style="font-size:1.25rem; marginBottom:.2rem;">Send Me a Message</h3>
+                <div style="display:grid; gridTemplateColumns:1fr 1fr; gap:1rem;" class="form-row">
+                  <div class="field">
+                    <label>Your Name</label>
+                    <input type="text" required placeholder="Ali Hassan" id="formName" />
+                  </div>
+                  <div class="field">
+                    <label>Phone (optional)</label>
+                    <input type="tel" placeholder="+92 300 0000000" id="formPhone" />
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Email Address</label>
+                  <input type="email" required placeholder="you@example.com" id="formEmail" />
+                </div>
+                <div class="field">
+                  <label>What do you need help with?</label>
+                  <select id="formService">
+                    <option value="">Choose a service (optional)</option>
+                    <option value="Meta Ads & Paid Advertising">Meta Ads & Paid Advertising</option>
+                    <option value="Social Media Management">Social Media Management</option>
+                    <option value="Content Creation & Strategy">Content Creation & Strategy</option>
+                    <option value="Taking Your Business Online">Taking Your Business Online</option>
+                    <option value="Not sure yet">Not sure yet</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>Tell Me About Your Business</label>
+                  <textarea rows="4" required placeholder="What do you do, who are your customers, and what would you like to achieve?" id="formMessage" style="resize:vertical;"></textarea>
+                </div>
+                <button type="submit" class="btn btn-amber" style="justify-content:center; font-size:.88rem; padding:.9rem;">Send Message →</button>
+              </form>
+              <div id="formSuccess" style="display:none; text-align:center; padding:3rem 1rem;">
+                <div style="font-size:3.5rem; marginBottom:1rem;">✅</div>
+                <h3 style="font-size:1.5rem; marginBottom:.75rem;">Message Sent!</h3>
+                <p style="font-family:'Manrope',sans-serif; color:var(--slate); line-height:1.8;">Thank you for reaching out. I'll reply within 24 hours.</p>
+                <button class="btn btn-border" style="marginTop:1.5rem;" onclick="resetForm()">Send Another</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- TERMS PAGE -->
+    <div id="page-Terms" class="page-section" style="paddingTop:var(--nav-h);">
+      <div style="background:linear-gradient(150deg,#111827,#1f2937); padding:52px 24px 44px; text-align:center;">
+        <span class="eyebrow" style="color:#d97706;">Legal</span>
+        <h1 style="color:#fff; font-size:clamp(1.8rem,4vw,2.6rem); marginTop:.5rem;">Terms & Conditions</h1>
+        <p style="font-family:'Manrope',sans-serif; color:rgba(255,255,255,.45); marginTop:.8rem; fontSize:.88rem;">Last updated: May 2025</p>
+      </div>
+      <section class="sec" style="background:var(--white);">
+        <div class="wrap" style="max-width:780px;">
+          <div class="legal-body">
+            <p>By engaging Muhammad Ansar Shahzad ("the Service Provider") for any digital marketing services, you agree to the following terms. Please read them carefully before committing to any service.</p>
+            <h3>1. Services Provided</h3>
+            <p>Services include Meta Ads & Paid Advertising, Social Media Management, Content Creation & Strategy, and building online presence for offline businesses. All services are delivered remotely unless otherwise agreed.</p>
+            <h3>2. Payment Terms</h3>
+            <p>Payment terms will be agreed upon in writing before work begins. The Service Provider reserves the right to pause or discontinue services in the event of non-payment. No refunds will be issued for work already completed.</p>
+            <h3>3. Client Responsibilities</h3>
+            <ul>
+              <li>Providing accurate business information and timely feedback.</li>
+              <li>Granting access to any social media pages or ad accounts necessary for the service.</li>
+              <li>Ensuring that products, services, and promotional claims comply with Meta's advertising policies and applicable local laws.</li>
+            </ul>
+            <h3>4. Ad Spend & Third-Party Platforms</h3>
+            <p>Any advertising budget paid to Meta (Facebook/Instagram) is separate from the service fee. The Service Provider does not control Meta's policies, ad approval decisions, or platform changes. Results are not guaranteed.</p>
+            <h3>5. Contact</h3>
+            <p>For any questions regarding these terms, contact: <a href="mailto:hello@ansar.me">hello@ansar.me</a></p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PRIVACY PAGE -->
+    <div id="page-Privacy" class="page-section" style="paddingTop:var(--nav-h);">
+      <div style="background:linear-gradient(150deg,#111827,#1f2937); padding:52px 24px 44px; text-align:center;">
+        <span class="eyebrow" style="color:#d97706;">Legal</span>
+        <h1 style="color:#fff; font-size:clamp(1.8rem,4vw,2.6rem); marginTop:.5rem;">Privacy Policy</h1>
+        <p style="font-family:'Manrope',sans-serif; color:rgba(255,255,255,.45); marginTop:.8rem; fontSize:.88rem;">Last updated: May 2025</p>
+      </div>
+      <section class="sec" style="background:var(--white);">
+        <div class="wrap" style="max-width:780px;">
+          <div class="legal-body">
+            <p>This Privacy Policy describes how Muhammad Ansar Shahzad ("I", "me") collects, uses, and protects the personal information you share when you contact me or engage my services through <a href="https://ansar.me">ansar.me</a>.</p>
+            <h3>1. What Information I Collect</h3>
+            <ul>
+              <li>Your name, email address, and phone number when you contact me via the website form or WhatsApp.</li>
+              <li>Business information you voluntarily share during discussions.</li>
+            </ul>
+            <h3>2. How I Use Your Information</h3>
+            <ul>
+              <li>To respond to your enquiries and deliver the agreed services.</li>
+              <li>To send project updates, reports, or invoices related to your account.</li>
+            </ul>
+            <h3>3. Contact</h3>
+            <p>For any privacy-related questions: <a href="mailto:hello@ansar.me">hello@ansar.me</a></p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="background:#111827; color:rgba(255,255,255,.45); paddingTop:56px;">
+    <div class="wrap" style="padding:0 24px;">
+      <div style="display:grid; gridTemplateColumns:1.4fr 1fr 1fr; gap:2.5rem; paddingBottom:48px;" class="three-col">
+        <div>
+          <div style="display:flex; align-items:center; gap:.55rem; cursor:pointer;" onclick="switchPage('Home')">
+            <div style="width:38px; height:38px; border-radius:10px; flex-shrink:0; background:linear-gradient(135deg,#111827,#1f2937); display:flex; align-items:center; justifyContent:center;">
+              <span style="font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.15rem; color:#d97706;">A</span>
+            </div>
+            <div>
+              <div style="font-family:'Cormorant Garamond',serif; font-weight:700; font-size:1.02rem; line-height:1.1; color:#fff;">ansar<span style="color:#b45309">.me</span></div>
+              <div style="font-family:'Manrope',sans-serif; font-size:.6rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.4);">Digital Marketing</div>
+            </div>
+          </div>
+          <p style="font-family:'Manrope',sans-serif; font-size:.85rem; lineHeight:1.85; maxWidth:260px; marginTop:1.1rem;">Helping local businesses and small brands grow through honest, practical digital marketing.</p>
+        </div>
+        <div>
+          <div style="font-family:'Manrope',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.25); marginBottom:1.1rem;">Pages</div>
+          <button class="foot-lnk" onclick="switchPage('Home')">Home</button>
+          <button class="foot-lnk" onclick="switchPage('About')">About</button>
+          <button class="foot-lnk" onclick="switchPage('Services')">Services</button>
+          <button class="foot-lnk" onclick="switchPage('Contact')">Contact</button>
+        </div>
+        <div>
+          <div style="font-family:'Manrope',sans-serif; font-size:.68rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.25); marginBottom:1.1rem;">Get in Touch</div>
+          <a href="tel:+923117420474" style="font-family:'Manrope',sans-serif; font-size:.85rem; color:rgba(255,255,255,.5); display:block; marginBottom:.4rem; textDecoration:none;">+92 311 7420474</a>
+          <a href="mailto:hello@ansar.me" style="font-family:'Manrope',sans-serif; font-size:.85rem; color:rgba(255,255,255,.5); display:block; marginBottom:.4rem; textDecoration:none;">hello@ansar.me</a>
+          <a href="https://wa.me/923117420474" target="_blank" rel="noopener noreferrer" style="font-family:'Manrope',sans-serif; font-size:.85rem; color:#4ade80; display:block; textDecoration:none;">WhatsApp →</a>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,.07); padding:20px 0; display:flex; justifyContent:space-between; alignItems:center; flexWrap:wrap; gap:.75rem;">
+        <p style="font-family:'Manrope',sans-serif; font-size:.76rem;">© 2025 Muhammad Ansar Shahzad · ansar.me</p>
+        <div style="display:flex; gap:1.5rem;">
+          <button class="foot-lnk" style="font-size:.76rem;" onclick="switchPage('Terms')">Terms & Conditions</button>
+          <button class="foot-lnk" style="font-size:.76rem;" onclick="switchPage('Privacy')">Privacy Policy</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/923117420474" target="_blank" rel="noopener noreferrer" class="wa-float" title="Chat on WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- SCRIPTS -->
+  <script>
+    function switchPage(pageId) {
+      document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById('page-' + pageId);
+      if (target) {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      document.querySelectorAll('.nav-lnk').forEach(btn => {
+        if (btn.textContent.trim().toLowerCase() === pageId.toLowerCase()) {
+          btn.classList.add('on');
+        } else {
+          btn.classList.remove('on');
+        }
+      });
+    }
+
+    function toggleMobileMenu(show) {
+      const overlay = document.getElementById('mobOverlay');
+      if (show) {
+        overlay.classList.add('active');
+      } else {
+        overlay.classList.remove('active');
+      }
+    }
+
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      item.classList.toggle('open');
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    }
+
+    function resetForm() {
+      document.getElementById('contactForm').reset();
+      document.getElementById('contactForm').style.display = 'flex';
+      document.getElementById('formSuccess').style.display = 'none';
+    }
+
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 36) {
+        header.style.background = 'rgba(250,248,244,.96)';
+        header.style.borderBottom = '1px solid rgba(17,24,39,.07)';
+        header.style.boxShadow = '0 2px 16px rgba(17,24,39,.07)';
+      } else {
+        header.style.background = 'rgba(250,248,244,.80)';
+        header.style.borderBottom = '1px solid transparent';
+        header.style.boxShadow = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
